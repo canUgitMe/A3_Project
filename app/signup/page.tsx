@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGoogle } from "@tabler/icons-react";
+import Link from "next/link";
 import { auth } from "@/lib/firebase";
 import {
 	createUserWithEmailAndPassword,
@@ -128,6 +129,13 @@ export default function SignupFormDemo() {
 							</span>
 							<BottomGradient />
 						</button>
+
+						<div className="text-center text-sm text-neutral-600 dark:text-neutral-300">
+							Already have an account?{" "}
+							<Link href="/signin" className="font-medium text-neutral-800 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white">
+								Sign in
+							</Link>
+						</div>
 					</div>
 				</form>
 			</div>
