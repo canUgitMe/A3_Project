@@ -118,7 +118,7 @@ export function NavbarDemo() {
 										className="hidden lg:block"
 									>
 										<Link href="/signup">
-											<IconUserPlus className="w-6 h-6 text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white" />
+											<IconUserPlus className="w-6 h-6 text-neutral-300 hover:text-white" />
 										</Link>
 									</motion.div>
 								)}
@@ -147,7 +147,7 @@ export function NavbarDemo() {
 								key={`mobile-link-${idx}`}
 								href={item.link}
 								onClick={() => setIsMobileMenuOpen(false)}
-								className="relative text-neutral-600 dark:text-neutral-300"
+								className="relative text-neutral-300 hover:text-white"
 							>
 								<span className="block">{item.name}</span>
 							</Link>
@@ -156,7 +156,7 @@ export function NavbarDemo() {
 							<Link
 								href="/signup"
 								onClick={() => setIsMobileMenuOpen(false)}
-								className="relative text-neutral-600 dark:text-neutral-300 flex items-center gap-2"
+								className="relative text-neutral-300 hover:text-white flex items-center gap-2"
 							>
 								<IconUserPlus className="w-5 h-5" />
 								<span className="block">Sign Up</span>
