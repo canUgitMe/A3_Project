@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 .main {
-	background-image: url('/bg.png');
-	background-size: cover;
-	/* makes it cover the whole screen */
-	background-position: center;
-	/* keeps it centered */
-	background-repeat: no-repeat;
-	/* prevent tiling */
-	background-attachment: fixed;
-	/* makes it stay fixed while scrolling */
+	position: relative;
+	min-height: 100vh;
+	width: 100%;
+	overflow-x: hidden;
+	background-color: #060010;
+}
+
+.iridescence-container {
+	width: 100%;
+	height: 100%;
+	/* background-color: #271e37; */
 }
