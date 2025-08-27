@@ -8,8 +8,18 @@
 	background-color: #060010;
 }
 
-.iridescence-container {
-	width: 100%;
-	height: 100%;
-	/* background-color: #271e37; */
+/* Fix for DotGrid visibility */
+.fixed.inset-0.z-0 {
+	height: 100vh;
+	width: 100vw;
+	pointer-events: auto;
+}
+
+/* Ensure all components have proper stacking context */
+.navbar-component,
+.glowing-effect-component,
+.about-section-component,
+.footer-component {
+	position: relative;
+	z-index: 20;
 }

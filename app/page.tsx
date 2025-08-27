@@ -1,36 +1,57 @@
 "use client";
 import React from "react";
 import { NavbarDemo } from "@/components/navbar";
-import DotGrid from "@/components/DotGrid";
+import AboutUsSection from "@/components/about-us";
+import Footer from "@/components/footer";
+import CustomAccordion from "@/components/Accordion";
+import Galaxy from "@/components/Galaxy";
+import Carousel from "@/components/Carousel";
 
 export default function BackgroundBoxesDemo() {
   return (
     <div className="main">
       <div className="fixed inset-0 z-0">
-        <DotGrid
-          dotSize={5}
-          gap={15}
-          baseColor="#271e37"
-          activeColor="#5227FF"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
+        <Galaxy
+          mouseRepulsion={false}
+          mouseInteraction={false}
+          density={0.8}
+          glowIntensity={0.4}
+          saturation={1}
+          hueShift={180}
+          twinkleIntensity={0.2}
+          rotationSpeed={0.1}
+          repulsionStrength={5}
+          autoCenterRepulsion={0}
+          starSpeed={0.5}
+          speed={1}
         />
       </div>
-      <NavbarDemo />
-      <div className="relative z-20 flex flex-col items-center justify-center">
-        <section className="min-h-screen flex items-center justify-center">
-          <h1 className="text-4xl font-bold text-white">Welcome to the Hero Section</h1>
+      {/* Content container with proper z-index */}
+      <div className="flex flex-col relative z-20" >
+        <NavbarDemo />
+
+        <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
+          <h2 className="text-center text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-400 via-gray-200 to-white bg-clip-text text-transparent mb-12">
+            Our Features
+          </h2>
+          <div className="w-full flex justify-center">
+            <Carousel
+              baseWidth={650}
+              mobileWidth={400}
+              autoplay={false}
+              autoplayDelay={3000}
+              pauseOnHover={true}
+              loop={false}
+              title="Features"
+            />
+          </div>
         </section>
-        <section className="min-h-screen flex items-center justify-center">
-          <p className="text-2xl text-white">Second Section Content</p>
-        </section>
-        <section className="min-h-screen flex items-center justify-center">
-          <p className="text-2xl text-white">Third Section Content</p>
-        </section>
+
+        <div className="animated-divider"></div>
+        <AboutUsSection />
+        <CustomAccordion />
+        <Footer />
       </div>
-    </div>
+    </div >
   );
 }
