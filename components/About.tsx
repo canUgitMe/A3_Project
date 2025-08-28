@@ -18,7 +18,7 @@ const teamMembers = [
   {
     name: "Anuvab Munshi",
     description: "(Backend Co-Lead)",
-    src: "/images/Anuvab.jpg",
+    src: "/images/Anuvab.png",
     linkedin: "https://www.linkedin.com/in/anuvab-munshi",
   },
   {
