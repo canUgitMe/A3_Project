@@ -19,12 +19,12 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 }) => {
 	return (
 		<div
-			className="mb-2 rounded-lg bg-black/40 border border-white/10 p-3 cursor-pointer select-none shadow-sm hover:bg-black/50 transition"
+			className="mb-2 rounded-lg bg-transparent backdrop-blur-md border border-[#6600ff]/50 p-3 cursor-pointer select-none shadow-sm hover:backdrop-blur-lg transition"
 			onClick={onClick}
 		>
 			{/* Header */}
 			<div className="flex justify-between items-center text-white">
-				<span className="text-base font-medium">{title}</span>
+				<span className="text-lg font-medium">{title}</span>
 				<motion.span
 					animate={{ rotate: isOpen ? 90 : 0 }}
 					transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -42,7 +42,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 						animate={{ opacity: 1, height: "auto" }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.5, ease: [0.25, 0.8, 0.25, 1] }}
-						className="overflow-hidden mt-1 text-sm text-gray-300"
+						className="overflow-hidden mt-1 text-sm text-[white]/75"
 					>
 						<div className="p-1">{content}</div>
 					</motion.div>
@@ -65,14 +65,18 @@ export default function CustomAccordion() {
 			<div className="w-full max-w-6xl rounded-2xl p-6 shadow-2xl">
 
 				{/* Heading */}
-				<h2 className="text-5xl font-bold text-center mb-15">Frequently Asked Questions</h2>
+				<h2 className="text-5xl md:text-7xl font-bold mb-8 md:mb-12 text-white text-center">
+					Frequently Asked <span className="text-purple-500">Questions</span>
+				</h2>
 
 				{/* Inner glassmorphic box */}
 				<div className="w-full p-4 shadow-lg">
 					{[
-						{ title: "Accordion 1", content: "This is the content for Accordion 1." },
-						{ title: "Accordion 2", content: "This is the content for Accordion 2." },
-						{ title: "Accordion 3", content: "This is the content for Accordion 3." },
+						{ title: "Who can join SkillPulse?", content: "Students, teachers, and professionals anyone who wants to give or receive constructive feedback." },
+						{ title: "How is SkillPulse different from other platforms?", content: "Unlike social platforms that focus on likes and followers, SkillPulse is built for professional growth, mentorship, and skill-building." },
+						{ title: "Who can post feedback? Is feedback anonymous?", content: "Only registered users (those with accounts) can post feedback. Reviewers may choose to submit feedback anonymously to the recipient, but all submissions are tied to accounts internally for safety." },
+						{ title: "Will it cost me to use the platform?", content: "No, the core features are free. The goal is to make learning and feedback accessible to everyone." },
+						{ title: "Can all feedback be guaranteed to be useful?", content: "Not always. Feedback depends on the reviewer’s perspective, so usefulness may vary. SkillPulse simply provides a space to share and receive different viewpoints." },
 					].map((item, index) => (
 						<AccordionItem
 							key={index}

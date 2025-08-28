@@ -15,17 +15,12 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { IconUserPlus, IconLogout } from "@tabler/icons-react";
+import { IconUserPlus, IconLogout, IconLocationSearch, IconUserCog } from "@tabler/icons-react";
 
 export function NavbarDemo() {
 	const baseNavItems = [
-		{ name: "Dashboard", link: "#features" },
-		{ name: "Explore", link: "#pricing" },
-	];
-
-	const authNavItems = [
-		{ name: "Sign Up", link: "/signup" },
-		{ name: "Sign In", link: "/signin" },
+		{ name: "Dashboard", link: "#features", icon: <IconUserCog className="w-5 h-5" /> },
+		{ name: "Explore", link: "#pricing", icon: <IconLocationSearch className="w-5 h-5" /> },
 	];
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -147,8 +142,9 @@ export function NavbarDemo() {
 								key={`mobile-link-${idx}`}
 								href={item.link}
 								onClick={() => setIsMobileMenuOpen(false)}
-								className="relative text-neutral-300 hover:text-white"
+								className="relative text-xl text-neutral-300 hover:text-white flex items-center gap-2"
 							>
+								{item.icon}
 								<span className="block">{item.name}</span>
 							</Link>
 						))}
@@ -156,7 +152,7 @@ export function NavbarDemo() {
 							<Link
 								href="/signup"
 								onClick={() => setIsMobileMenuOpen(false)}
-								className="relative text-neutral-300 hover:text-white flex items-center gap-2"
+								className="relative text-xl text-neutral-300 hover:text-white flex items-center gap-2"
 							>
 								<IconUserPlus className="w-5 h-5" />
 								<span className="block">Sign Up</span>
@@ -170,7 +166,7 @@ export function NavbarDemo() {
 									handleSignOut();
 									setIsMobileMenuOpen(false);
 								}}
-								className="w-full flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 rounded-md hover:bg-red-500/20 transition-colors"
+								className="flex text-xl items-center gap-2 px-4 py-2 bg-red-500/30 backdrop-blur-md text-white rounded-md hover:bg-red-500/50 transition-colors"
 							>
 								<IconLogout className="w-5 h-5" />
 								<span>Sign Out</span>
@@ -182,134 +178,3 @@ export function NavbarDemo() {
 		</div>
 	);
 }
-
-
-
-
-
-
-
-
-// "use client";
-// import {
-// 	Navbar,
-// 	NavBody,
-// 	NavItems,
-// 	MobileNav,
-// 	NavbarLogo,
-// 	NavbarButton,
-// 	MobileNavHeader,
-// 	MobileNavToggle,
-// 	MobileNavMenu,
-// } from "@/components/ui/nav";
-// import { useState } from "react";
-// import { useAuth } from "@/lib/useAuth";
-// import { auth } from "@/lib/firebase";
-// import { signOut } from "firebase/auth";
-// import Link from "next/link";
-
-// export function NavbarDemo() {
-// 	const navItems = [
-// 		{ name: "Dashboard", link: "#features" },
-// 		{ name: "Explore", link: "#pricing" },
-// 	];
-
-// 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-// 	const { user, loading } = useAuth();
-
-// 	const handleSignOut = async () => {
-// 		await signOut(auth);
-// 	};
-
-// 	return (
-// 		<div className="relative w-full">
-// 			<Navbar>
-// 				{/* Desktop Navigation */}
-// 				<NavBody>
-// 					<NavbarLogo />
-// 					<NavItems items={navItems} />
-
-// 					{/* Right side buttons */}
-// 					<div className="flex items-center gap-4">
-// 						{!loading && (
-// 							<>
-// 								{user ? (
-// 									<NavbarButton
-// 										as="button"
-// 										onClick={handleSignOut}
-// 										variant="secondary"
-// 									>
-// 										Sign Out
-// 									</NavbarButton>
-// 								) : (
-// 									<Link href="/signin">
-// 										<NavbarButton variant="secondary">Login</NavbarButton>
-// 									</Link>
-// 								)}
-// 							</>
-// 						)}
-// 					</div>
-// 				</NavBody>
-
-// 				{/* Mobile Navigation */}
-// 				<MobileNav>
-// 					<MobileNavHeader>
-// 						<NavbarLogo />
-// 						<MobileNavToggle
-// 							isOpen={isMobileMenuOpen}
-// 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-// 						/>
-// 					</MobileNavHeader>
-
-// 					<MobileNavMenu
-// 						isOpen={isMobileMenuOpen}
-// 						onClose={() => setIsMobileMenuOpen(false)}
-// 					>
-// 						{navItems.map((item, idx) => (
-// 							<a
-// 								key={`mobile-link-${idx}`}
-// 								href={item.link}
-// 								onClick={() => setIsMobileMenuOpen(false)}
-// 								className="relative text-neutral-600 dark:text-neutral-300"
-// 							>
-// 								<span className="block">{item.name}</span>
-// 							</a>
-// 						))}
-
-// 						{/* Mobile buttons */}
-// 						<div className="flex w-full flex-col gap-4">
-// 							{!loading && (
-// 								<>
-// 									{user ? (
-// 										<NavbarButton
-// 											as="button"
-// 											onClick={() => {
-// 												handleSignOut();
-// 												setIsMobileMenuOpen(false);
-// 											}}
-// 											variant="primary"
-// 											className="w-full"
-// 										>
-// 											Sign Out
-// 										</NavbarButton>
-// 									) : (
-// 										<Link href="/signin" className="w-full">
-// 											<NavbarButton
-// 												onClick={() => setIsMobileMenuOpen(false)}
-// 												variant="primary"
-// 												className="w-full"
-// 											>
-// 												Login
-// 											</NavbarButton>
-// 										</Link>
-// 									)}
-// 								</>
-// 							)}
-// 						</div>
-// 					</MobileNavMenu>
-// 				</MobileNav>
-// 			</Navbar>
-// 		</div>
-// 	);
-// }
-

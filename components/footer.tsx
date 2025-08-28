@@ -5,14 +5,14 @@ import { SiX } from "react-icons/si";
 
 export default function Footer() {
   return (
-    
-    <footer className="bg-black-900 text-white">
+
+    <footer className="bg-transparent backdrop-blur-md text-white">
       {/* Main Footer */}
-      <div className="border-t border-gray-800"></div>
+      <div className="border-t border-[#6600ff]/40"></div>
       <div className="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
         {/* Left: Branding */}
         <div className="text-xl font-bold hover:text-purple-500 transition-colors">
-          Skillverse
+          PeerPulse
         </div>
 
         {/* Middle: Empty */}
@@ -54,19 +54,19 @@ export default function Footer() {
           {/* Email Section */}
           <div className="text-sm text-gray-400">
             <a href="mailto:contact@skillverse.com" className="hover:text-white transition-colors">
-              contact@skillverse.com
+              peerpulse_support@gmail.com
             </a>
           </div>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-800"></div>
+      <div className="border-t border-[#6600ff]/40"></div>
 
       {/* Bottom Copyright */}
-      
+
       <div className="max-w-7xl mx-auto px-6 py-4 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Skillverse. All rights reserved.
+        © {new Date().getFullYear()} PeerPulse. All rights reserved.
       </div>
     </footer>
   );

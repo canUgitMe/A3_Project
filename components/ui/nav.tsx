@@ -7,6 +7,7 @@ import {
 	useScroll,
 	useMotionValueEvent,
 } from "framer-motion";
+import Link from "next/link";
 import React, { useRef, useState } from "react";
 
 interface NavbarProps {
@@ -125,14 +126,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
 				<a
 					onMouseEnter={() => setHovered(idx)}
 					onClick={onItemClick}
-					className="relative px-4 py-2 text-neutral-300 hover:text-white"
+					className="relative px-4 py-2 text-neutral-100 hover:text-white"
 					key={`link-${idx}`}
 					href={item.link}
 				>
 					{hovered === idx && (
 						<motion.div
 							layoutId="hovered"
-							className="absolute inset-0 h-full w-full rounded-full bg-neutral-800"
+							className="absolute inset-0 h-full w-full rounded-full border border-[#6600ff]"
 						/>
 					)}
 					<span className="relative z-20">{item.name}</span>
@@ -162,8 +163,8 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
 				damping: 50,
 			}}
 			className={cn(
-				"relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-white/10 border border-[#5227FF]/20 px-0 py-2 lg:hidden rounded-full",
-				visible && "bg-white/15",
+				"relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent border border-[#6600ff] px-0 py-2 lg:hidden rounded-full",
+				visible,
 				className,
 			)}
 		>
@@ -196,29 +197,20 @@ export const MobileNavMenu = ({
 }: MobileNavMenuProps) => {
 	return (
 		<AnimatePresence>
+
 			{isOpen && (
 				<motion.div
 					initial={{
 						opacity: 0,
-						backdropFilter: "blur(8px)",
-						backgroundColor: "rgba(255, 255, 255, 0.1)"
 					}}
 					animate={{
 						opacity: 1,
-						backdropFilter: "blur(20px)",
-						backgroundColor: "rgba(255, 255, 255, 0.15)"
 					}}
 					exit={{
 						opacity: 0,
-						backdropFilter: "blur(8px)",
-						backgroundColor: "rgba(255, 255, 255, 0.1)"
-					}}
-					transition={{
-						duration: 0.3,
-						ease: "easeInOut"
 					}}
 					className={cn(
-						"absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-2xl bg-white/10 border border-[#5227FF]/20 px-4 py-8 shadow-[0_0_24px_rgba(82,_39,_255,_0.1),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(82,_39,_255,_0.1)]",
+						"absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-2xl bg-[black]/70 border border-[#6600ff] px-4 py-8 ",
 						className,
 					)}
 				>
@@ -245,18 +237,18 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = () => {
 	return (
-		<a
-			href="#"
-			className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-white"
+		<Link
+			href="/"
+			className="relative z-20 mr-2 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-white"
 		>
 			<img
 				src="/logo.png"
 				alt="logo"
 				width={40}
 				height={40}
+				className="object-cover rounded-full"
 			/>
-			<span className="font-medium text-white">PeerPulse</span>
-		</a>
+		</Link>
 	);
 };
 

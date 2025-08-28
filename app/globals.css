@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
 .main {
-	position: relative;
-	min-height: 100vh;
-	width: 100%;
-	overflow-x: hidden;
 	background-color: #060010;
 }
 
@@ -13,13 +9,4 @@
 	height: 100vh;
 	width: 100vw;
 	pointer-events: auto;
-}
-
-/* Ensure all components have proper stacking context */
-.navbar-component,
-.glowing-effect-component,
-.about-section-component,
-.footer-component {
-	position: relative;
-	z-index: 20;
 }

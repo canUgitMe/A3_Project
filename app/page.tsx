@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { NavbarDemo } from "@/components/navbar";
-import AboutUsSection from "@/components/about-us";
-import Footer from "@/components/footer";
+import AboutUsSection from "@/components/About";
+import Footer from "@/components/Footer";
 import CustomAccordion from "@/components/Accordion";
 import Galaxy from "@/components/Galaxy";
-import Carousel from "@/components/Carousel";
+import CarouselNew from "@/components/CarouselNew";
+import { HeroSectionOne } from "@/components/Hero";
 
 export default function BackgroundBoxesDemo() {
   return (
@@ -29,27 +30,18 @@ export default function BackgroundBoxesDemo() {
       {/* Content container with proper z-index */}
       <div className="flex flex-col relative z-20" >
         <NavbarDemo />
-
+        {/* <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
+          <HeroSectionOne />
+        </section> */}
         <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
-          <h2 className="text-center text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-400 via-gray-200 to-white bg-clip-text text-transparent mb-12">
-            Our Features
-          </h2>
           <div className="w-full flex justify-center">
-            <Carousel
-              baseWidth={650}
-              mobileWidth={400}
-              autoplay={false}
-              autoplayDelay={3000}
-              pauseOnHover={true}
-              loop={false}
-              title="Features"
-            />
+            <CarouselNew />
           </div>
         </section>
-
-        <div className="animated-divider"></div>
         <AboutUsSection />
-        <CustomAccordion />
+        <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
+          <CustomAccordion />
+        </section>
         <Footer />
       </div>
     </div >
