@@ -2,7 +2,7 @@
 import React from "react";
 import { NavbarDemo } from "@/components/navbar";
 import AboutUsSection from "@/components/About";
-import Footer from "@/components/Footer";
+import Footer from "@/components/FooterComp";
 import CustomAccordion from "@/components/Accordion";
 import Galaxy from "@/components/Galaxy";
 import CarouselNew from "@/components/CarouselNew";
