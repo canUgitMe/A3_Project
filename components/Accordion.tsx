@@ -19,7 +19,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 }) => {
 	return (
 		<div
-			className="mb-2 rounded-lg bg-transparent backdrop-blur-md border border-[#6600ff]/50 p-3 cursor-pointer select-none shadow-sm hover:backdrop-blur-lg transition"
+			className="mb-2 rounded-lg bg-transparent backdrop-blur-md border border-[#6600ff]/50 p-3 cursor-pointer select-none shadow-sm hover:backdrop-blur-lg transition md:max-w-[57rem]"
 			onClick={onClick}
 		>
 			{/* Header */}
