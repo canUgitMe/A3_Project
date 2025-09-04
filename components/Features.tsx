@@ -46,7 +46,7 @@ const FEATURES: FeatureItem[] = [
 	}
 ];
 
-const CarouselNew = () => {
+const Features = () => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isTouching, setIsTouching] = useState(false);
 	const [touchStart, setTouchStart] = useState(0);
@@ -223,4 +223,4 @@ const CarouselNew = () => {
 	);
 };
 
-export default CarouselNew;
+export default Features;

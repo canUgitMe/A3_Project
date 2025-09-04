@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { NavbarDemo } from "@/components/navbar";
+import { NavigationBar } from "@/components/Navigation";
 import AboutUsSection from "@/components/About";
 import Footer from "@/components/FooterComp";
 import CustomAccordion from "@/components/Accordion";
 import Galaxy from "@/components/Galaxy";
-import CarouselNew from "@/components/CarouselNew";
+import Features from "@/components/Features";
 import { HeroSectionOne } from "@/components/Hero";
 
 export default function BackgroundBoxesDemo() {
@@ -29,13 +29,13 @@ export default function BackgroundBoxesDemo() {
       </div>
       {/* Content container with proper z-index */}
       <div className="flex flex-col relative z-20" >
-        <NavbarDemo />
+        <NavigationBar />
         {/* <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
           <HeroSectionOne />
         </section> */}
         <section className="min-h-screen w-full flex flex-col items-center justify-center py-20">
           <div className="w-full flex justify-center">
-            <CarouselNew />
+            <Features />
           </div>
         </section>
         <AboutUsSection />

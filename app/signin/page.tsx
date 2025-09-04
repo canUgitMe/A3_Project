@@ -23,7 +23,23 @@ export default function SigninFormDemo() {
 		e.preventDefault();
 		setError("");
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			const user = userCredential.user;
+
+			// Sync user with database
+			await fetch('/api/auth/sync', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					firebaseId: user.uid,
+					email: user.email,
+					displayName: user.displayName,
+					photoURL: user.photoURL,
+				}),
+			});
+
 			console.log("Signed in successfully");
 			router.push("/");
 		} catch (err: any) {
@@ -35,7 +51,23 @@ export default function SigninFormDemo() {
 		setError("");
 		try {
 			const provider = new GoogleAuthProvider();
-			await signInWithPopup(auth, provider);
+			const result = await signInWithPopup(auth, provider);
+			const user = result.user;
+
+			// Sync user with database
+			await fetch('/api/auth/sync', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					firebaseId: user.uid,
+					email: user.email,
+					displayName: user.displayName,
+					photoURL: user.photoURL,
+				}),
+			});
+
 			console.log("Google sign-in success");
 			router.push("/");
 		} catch (err: any) {

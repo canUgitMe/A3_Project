@@ -17,10 +17,10 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconUserPlus, IconLogout, IconLocationSearch, IconUserCog } from "@tabler/icons-react";
 
-export function NavbarDemo() {
+export function NavigationBar() {
 	const baseNavItems = [
-		{ name: "Dashboard", link: "#features", icon: <IconUserCog className="w-5 h-5" /> },
-		{ name: "Explore", link: "#pricing", icon: <IconLocationSearch className="w-5 h-5" /> },
+		{ name: "Profile", link: "/profile", icon: <IconUserCog className="w-5 h-5" /> },
+		{ name: "Explore", link: "/explore", icon: <IconLocationSearch className="w-5 h-5" /> },
 	];
 
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
