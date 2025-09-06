@@ -68,7 +68,9 @@ export async function createPost(content: string, image: string, firebaseUid: st
     console.error("Failed to create post:", error);
     return { success: false, error: "Failed to create post" };
   }
-} export async function getPosts() {
+}
+
+export async function getPosts() {
   try {
     const posts = await prisma.post.findMany({
       orderBy: {

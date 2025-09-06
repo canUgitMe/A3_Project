@@ -26,6 +26,7 @@ function ImageUpload({ endpoint, onChange, value }: ImageUploadProps) {
   }
   return (
     <UploadDropzone
+      className="border-none custom-upload-dropzone"
       endpoint={endpoint}
       onClientUploadComplete={(res: any) => {
         console.log("Upload completed:", res);

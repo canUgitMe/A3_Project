@@ -131,7 +131,7 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     <Card className="overflow-hidden border-[#6600ff]">
       <CardContent className="p-4 sm:p-6">
         <div className="space-y-4">
-          <div className="flex space-x-3 sm:space-x-4">
+          <div className="flex space-x-3 items-center sm:space-x-4">
             <Link href={`/profile/${post.author.username}`}>
               <Avatar className="size-8 sm:w-10 sm:h-10">
                 <AvatarImage src={post.author.image ?? "/avatar.png"} />
@@ -141,15 +141,14 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
             {/* POST HEADER & TEXT CONTENT */}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 truncate">
+                <div className="flex flex-row items-center space-x-2 truncate">
                   <Link
                     href={`/profile/${post.author.username}`}
                     className="font-semibold truncate"
                   >
-                    {post.author.name}
+                    {post.author.username}
                   </Link>
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Link href={`/profile/${post.author.username}`}>@{post.author.username}</Link>
+                  <div className="flex items-center space-x-2 text-sm text-white/50">
                     <span>•</span>
                     <span>{formatDistanceToNow(new Date(post.createdAt))} ago</span>
                   </div>
@@ -159,9 +158,9 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
                   <DeleteAlertDialog isDeleting={isDeleting} onDelete={handleDeletePost} />
                 )}
               </div>
-              <p className="mt-2 text-sm text-foreground break-words">{post.content}</p>
             </div>
           </div>
+          <p className="mt-2 text-[16px] font-semibold text-foreground break-words">{post.content}</p>
 
           {/* POST IMAGE */}
           {post.image && (

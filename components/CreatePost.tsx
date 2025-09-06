@@ -94,7 +94,7 @@ function CreatePost({ onPostCreated }: Props) {
 					</div>
 
 					{(showImageUpload || imageUrl) && (
-						<div className="border rounded-lg p-4">
+						<div className="border border-[#6600ff] rounded-lg p-4">
 							<ImageUpload
 								endpoint="postImage"
 								value={imageUrl}
