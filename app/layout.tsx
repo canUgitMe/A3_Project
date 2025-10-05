@@ -1,16 +1,21 @@
-import ChatWidget from '@/components/ChatWidget'
-import './globals.css'
-import NextTopLoader from 'nextjs-toploader'
+import "./globals.css";
+import NextTopLoader from "nextjs-toploader";
+import ChatWidget from "@/components/ChatWidget";
+import { Toaster } from "react-hot-toast"; // ✅ For consistent toast notifications
 
 export const metadata = {
-  title: 'PeerPulse',
-  description: 'Peer-driven feedback for professional growth',
-}
+  title: "PeerPulse",
+  description: "Peer-driven feedback for professional growth",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="relative">
+      <body className="relative min-h-screen bg-background text-foreground">
         {/* Top Loader */}
         <NextTopLoader
           color={`linear-gradient(to right,
@@ -24,12 +29,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showSpinner={false}
         />
 
-        {/* Page Content */}
-        {children}
+        {/* Main App Content */}
+        <main className="pb-16">{children}</main>
 
-        {/* Floating Chat Widget on all pages */}
+        {/* Floating Chat Widget */}
         <ChatWidget />
+
+        {/* Toast Notifications (for post likes, comments, etc.) */}
+        <Toaster position="bottom-center" toastOptions={{ duration: 3000 }} />
       </body>
     </html>
-  )
+  );
 }

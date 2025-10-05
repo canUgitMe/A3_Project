@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { Card, CardContent } from "./ui/card";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import { DeleteAlertDialog } from "./DeleteAlertDialog";
@@ -17,23 +17,26 @@ import { Textarea } from "./ui/textarea";
 type Posts = Awaited<ReturnType<typeof getPosts>>;
 type Post = Posts[number];
 
-function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
+interface PostCardProps {
+  post: Post;
+  dbUserId: string | null;
+}
+
+function PostCard({ post, dbUserId }: PostCardProps) {
   const [user, setUser] = useState<any>(null);
   const [newComment, setNewComment] = useState("");
   const [isCommenting, setIsCommenting] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [optimisticLikes, setOptmisticLikes] = useState(post._count.likes);
+  const [optimisticLikes, setOptimisticLikes] = useState(post._count.likes);
   const [showComments, setShowComments] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  const [hasLiked, setHasLiked] = useState(post.likes.some(like => like.userId === dbUserId));
-  // Local state for comments
+  const [hasLiked, setHasLiked] = useState(post.likes.some((like) => like.userId === dbUserId));
   const [comments, setComments] = useState(post.comments);
 
   // Update like status when dbUserId changes
   useEffect(() => {
-    console.log("DB USER ID: " + dbUserId)
-    setHasLiked(post.likes.some(like => like.userId === dbUserId));
+    setHasLiked(post.likes.some((like) => like.userId === dbUserId));
   }, [dbUserId, post.likes]);
 
   // Monitor Firebase auth state
@@ -49,21 +52,17 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     try {
       setIsLiking(true);
 
-      // Optimistically update the UI
+      // Optimistic UI update
       const newHasLiked = !hasLiked;
       setHasLiked(newHasLiked);
-      setOptmisticLikes(prev => prev + (newHasLiked ? 1 : -1));
+      setOptimisticLikes((prev) => prev + (newHasLiked ? 1 : -1));
 
-      // Make the API call
       const result = await toggleLike(post.id, user.uid);
       if (!result.success) throw new Error(result.error);
-
-      // The server action will update the likes in the database,
-      // and the next page refresh will show the correct state
     } catch (error) {
-      // Revert optimistic updates if there's an error
+      // Revert optimistic updates if failed
       setHasLiked(!hasLiked);
-      setOptmisticLikes(post._count.likes);
+      setOptimisticLikes(post._count.likes);
       toast.error("Failed to update like");
     } finally {
       setIsLiking(false);
@@ -75,24 +74,24 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     try {
       setIsCommenting(true);
       const result = await createComment(post.id, newComment, user.uid);
-      if (result?.success) {
+
+      if (result?.success && result.comment) {
         toast.success("Comment posted successfully");
         setNewComment("");
-        // Add the new comment to local state for real-time update
-        if (result.comment) {
-          setComments(prev => [
-            {
-              ...result.comment,
-              author: {
-                id: user.uid,
-                name: user.displayName || "Anonymous",
-                username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : "anonymous",
-                image: user.photoURL || user.imageUrl || user.image || "/avatar.png"
-              }
+        setComments((prev) => [
+          {
+            ...result.comment,
+            author: {
+              id: user.uid,
+              name: user.displayName || "Anonymous",
+              username: user.displayName
+                ? user.displayName.replace(/\s+/g, "").toLowerCase()
+                : "anonymous",
+              image: user.photoURL || "/avatar.png",
             },
-            ...prev
-          ]);
-        }
+          },
+          ...prev,
+        ]);
       } else {
         throw new Error(result?.error || "Failed to post comment");
       }
@@ -107,16 +106,14 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     if (isDeleting || !user) return;
     try {
       setIsDeleting(true);
-      // Optimistically hide the post
       setIsDeleted(true);
+
       const result = await deletePost(post.id, user.uid);
-      if (result.success) {
-        toast.success("Post deleted successfully");
-      } else {
-        // If deletion fails, show the post again
+      if (!result.success) {
         setIsDeleted(false);
         throw new Error(result.error);
       }
+      toast.success("Post deleted successfully");
     } catch (error) {
       toast.error("Failed to delete post");
     } finally {
@@ -124,13 +121,13 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     }
   };
 
-  // Don't render the card if it's been deleted
   if (isDeleted) return null;
 
   return (
     <Card className="overflow-hidden border-[#6600ff]">
       <CardContent className="p-4 sm:p-6">
         <div className="space-y-4">
+          {/* HEADER */}
           <div className="flex space-x-3 items-center sm:space-x-4">
             <Link href={`/profile/${post.author.username}`}>
               <Avatar className="size-8 sm:w-10 sm:h-10">
@@ -138,7 +135,6 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
               </Avatar>
             </Link>
 
-            {/* POST HEADER & TEXT CONTENT */}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between">
                 <div className="flex flex-row items-center space-x-2 truncate">
@@ -153,44 +149,48 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
                     <span>{formatDistanceToNow(new Date(post.createdAt))} ago</span>
                   </div>
                 </div>
-                {/* Check if current user is the post author */}
                 {dbUserId === post.author.id && (
                   <DeleteAlertDialog isDeleting={isDeleting} onDelete={handleDeletePost} />
                 )}
               </div>
             </div>
           </div>
-          <p className="mt-2 text-[16px] font-semibold text-foreground break-words">{post.content}</p>
+
+          {/* POST CONTENT */}
+          <p className="mt-2 text-[16px] font-semibold text-foreground break-words">
+            {post.content}
+          </p>
 
           {/* POST IMAGE */}
           {post.image && (
             <div className="rounded-lg overflow-hidden">
-              <img src={post.image} alt="Post content" className="w-full h-auto object-cover" />
+              <img
+                src={post.image}
+                alt="Post content"
+                className="w-full h-auto object-cover"
+              />
             </div>
           )}
 
-          {/* LIKE & COMMENT BUTTONS */}
+          {/* ACTION BUTTONS */}
           <div className="flex items-center pt-2 space-x-4">
             {user ? (
               <Button
                 variant="ghost"
                 size="sm"
-                className={`text-muted-foreground gap-2 ${hasLiked ? "text-red-500 hover:text-red-600" : "hover:text-red-500"
-                  }`}
+                className={`gap-2 ${
+                  hasLiked ? "text-red-500 hover:text-red-600" : "hover:text-red-500"
+                }`}
                 onClick={handleLike}
               >
-                {hasLiked ? (
-                  <HeartIcon className="size-5 fill-current" />
-                ) : (
-                  <HeartIcon className="size-5" />
-                )}
+                <HeartIcon className={`size-5 ${hasLiked ? "fill-current" : ""}`} />
                 <span>{optimisticLikes}</span>
               </Button>
             ) : (
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-muted-foreground gap-2"
+                className="gap-2"
                 onClick={() => {
                   const provider = new GoogleAuthProvider();
                   signInWithPopup(auth, provider);
@@ -204,7 +204,7 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
             <Button
               variant="ghost"
               size="sm"
-              className="text-muted-foreground gap-2 hover:text-blue-500"
+              className="gap-2 hover:text-blue-500"
               onClick={() => setShowComments((prev) => !prev)}
             >
               <MessageCircleIcon
@@ -214,11 +214,10 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
             </Button>
           </div>
 
-          {/* COMMENTS SECTION */}
+          {/* COMMENTS */}
           {showComments && (
             <div className="space-y-4 pt-4 border-t">
               <div className="space-y-4">
-                {/* DISPLAY COMMENTS */}
                 {comments.map((comment) => (
                   <div key={comment.id} className="flex space-x-3">
                     <Avatar className="size-8 flex-shrink-0">
@@ -294,4 +293,5 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
     </Card>
   );
 }
+
 export default PostCard;
